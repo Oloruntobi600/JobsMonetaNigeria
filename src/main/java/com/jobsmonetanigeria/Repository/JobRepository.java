@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JobRepository extends JpaRepository<JobModel, Long> {
-    @Query("SELECT j FROM JobModel j WHERE j.Title = :title")
+    @Query("SELECT j FROM JobModel j WHERE j.jobDetails = :title")
     Optional<JobModel> findByTitle(@Param("title") String title);
-    List<JobModel> findByYearGreaterThan(int year);
+    @Query("SELECT j FROM JobModel j WHERE j.datePosted > :year")
+    List<JobModel> findByYearGreaterThan(@Param("year") int year);
 }

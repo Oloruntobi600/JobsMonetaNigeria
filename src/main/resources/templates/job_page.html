@@ -74,28 +74,44 @@
 <body>
 <header>
   <div th:insert="~{parts/navigation::navigation}"></div>
-  <h1>Welcome to creating new Jobs <span th:text="${userLogin}"></span></h1>
+  <h1> <span th:text="${userLogin}"></span></h1>
   <form th:action="@{/logout}" method="post">
     <input type="submit" value="Logout">
   </form>
 </header>
+
+<!-- Job Advertisement Details -->
+<div class="container" th:if="${jobDetails != null}">
+  <h1>Job Advertisement: <span th:text="${jobDetails.title}"></span></h1>
+</div>
+<!-- End Job Advertisement Details -->
+
 <table>
   <tr>
-    <th>Title</th>
-    <th>Year</th>
+    <th>Job Details</th>
+    <th>Date Posted</th>
+    <th>Company Name</th>
+    <th>Location</th>
+    <th>Requirements</th>
     <th></th>
     <th></th>
+    <th sec:authorize="hasRole('ADMIN')"></th>
   </tr>
   <th:block th:each="job : ${userJobs}">
     <tr>
-      <td th:text="${job.title}"></td>
-      <td th:text="${job.year}"></td>
-      <td><button><a th:href="@{|/jobs/edit/${job.title}|}">Edit</a></button></td>
-      <td sec:authorize="hasRole('ADMIN')"><button><a th:href="@{|/jobs/delete/${job.title}|}">Delete</a></button></td>
+      <td th:text="${job.jobDetails}"></td>
+      <td th:text="${job.datePosted}"></td>
+      <td th:text="${job.companyName}"></td>
+      <td th:text="${job.location}"></td>
+      <td th:text="${job.requirements}"></td>
+      <td><button><a th:href="@{|/jobs/edit/${job.jobDetails}|}">Edit</a></button></td>
+      <td sec:authorize="hasRole('ADMIN')">
+        <button><a th:href="@{|/jobs/delete/${job.jobDetails}|}">Delete</a></button></td>
     </tr>
   </th:block>
 </table>
-<a href="/jobs/create">Add new Job</a>
+<a th:href="@{/jobs/create}" sec:authorize="hasRole('ADMIN')">Add new Job</a>
+
 <footer>
   <div th:insert="~{parts/footer :: footer}"></div>
 </footer>

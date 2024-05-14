@@ -7,6 +7,13 @@ import com.jobsmonetanigeria.dao.JobDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,7 +34,6 @@ public class JobServiceImpl implements JobService {
             return jobRepository.findAll();
         }
 
-        // Example filtering condition, update as needed
         return jobRepository.findByYearGreaterThan(1951);
     }
 
@@ -35,10 +41,16 @@ public class JobServiceImpl implements JobService {
     @Override
     public void save(JobModel jobModel) {
         JobModel jobmodel = new JobModel();
-        jobmodel.setTitle(jobmodel.getTitle());
-        jobmodel.setYear(jobModel.getYear());
+        jobmodel.setJobDetails(jobmodel.getJobDetails());
+        jobmodel.setDatePosted(jobModel.getDatePosted());
+        jobmodel.setCompanyName(jobModel.getCompanyName());
+        jobmodel.setLocation(jobModel.getLocation());
+        jobmodel.setRequirements(jobModel.getLocation());
         jobmodel.setDescription(jobmodel.getDescription());
+        jobmodel.setCreatedAt(new Date());
         jobDao.save(jobModel);
+
+
     }
 
     @Override
@@ -56,6 +68,29 @@ public class JobServiceImpl implements JobService {
     @Override
     public void delete(String title) {
         findByTitleAndDelete(title);
+    }
+
+    @Autowired
+    private EntityManager entityManager;
+    public List<JobModel> searchJobs(String jobDetails, String companyName, String location) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<JobModel> criteriaQuery = criteriaBuilder.createQuery(JobModel.class);
+        Root<JobModel> root = criteriaQuery.from(JobModel.class);
+
+        // How to Create predicates based on search criteria
+        Predicate keywordPredicate = criteriaBuilder.like(root.get("keywords"), "%" + jobDetails + "%");
+        Predicate locationPredicate = criteriaBuilder.like(root.get("location"), "%" + companyName + "%");
+        Predicate categoryPredicate = criteriaBuilder.like(root.get("category"), "%" + location + "%");
+
+        // How to Combine predicates with AND condition
+        Predicate searchPredicate = criteriaBuilder.and(keywordPredicate, locationPredicate, categoryPredicate);
+
+        //  How to Add where clause to the query
+        criteriaQuery.where(searchPredicate);
+
+        // How to Execute the query
+        TypedQuery<JobModel> typedQuery = entityManager.createQuery(criteriaQuery);
+        return typedQuery.getResultList();
     }
 
 }

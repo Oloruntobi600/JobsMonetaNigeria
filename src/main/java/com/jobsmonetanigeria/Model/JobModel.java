@@ -4,6 +4,7 @@ package com.jobsmonetanigeria.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,10 +20,19 @@ public class JobModel {
     private Long id;
 
     @Column(nullable = false)
-    private String Title;
+    private String jobDetails;
 
     @Column(nullable = false)
-    private Integer year;
+    private Integer datePosted;
+
+    @Column(nullable = false)
+    private String companyName;
+
+    @Column(nullable = false)
+    private String location;
+
+    @Column(nullable = false)
+    private String requirements;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -52,20 +62,44 @@ public class JobModel {
         this.id = id;
     }
 
-    public String getTitle() {
-        return Title;
+    public String getJobDetails() {
+        return jobDetails;
     }
 
-    public void setTitle(String title) {
-        Title = title;
+    public void setJobDetails(String jobDetails) {
+        this.jobDetails = jobDetails;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getDatePosted() {
+        return datePosted;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setDatePosted(Integer datePosted) {
+        this.datePosted = datePosted;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
     }
 
     public String getDescription() {

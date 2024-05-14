@@ -17,28 +17,31 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
 
-    private static List<Users> users = new ArrayList<>();
+//    private static List<Users> users = new ArrayList<>();
 
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @PostConstruct
     public void postConstruct() {
-        Users user = new Users();
-        user.setRole(UserRole.ADMIN);
-        user.setUsername("admin");
-        user.setPassword(passwordEncoder.encode("abc"));
-        users.add(user);
+        Optional<Users> existingAdmin = userRepository.findByUsername("admin");
+        if (existingAdmin.isEmpty()) {
+            Users user = new Users();
+            user.setRole(UserRole.ADMIN);
+            user.setUsername("admin");
+            user.setPassword(passwordEncoder.encode("abc"));
+            userRepository.save(user);
+        }
     }
 
     public void register(Users user) {
         user.setRole(UserRole.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        users.add(user);
+        userRepository.save(user);
     }
 
     public Users findByLogin(String login) {
-        return users.stream().filter(user -> user.getUsername().equals(login))
-                .findFirst()
+        return userRepository.findByUsername(login)
                 .orElse(null);
     }
     @Autowired

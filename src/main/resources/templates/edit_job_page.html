@@ -6,8 +6,12 @@
 </head>
 <body>
     <form method="post" th:action="@{/jobs/editJob}" th:object="${jobToEdit}">
-        <input type="text" name="title" , placeholder="Title" th:value="${jobToEdit.title}">
-        <input type="number" name="year" , placeholder="Year" th:value="${jobToEdit.year}">
+        <input type="text" name="jobDetails" placeholder="Job_Details" th:value="${jobToEdit.description}">
+        <input type="number" name="datePosted" placeholder="Date_Posted" th:value="${jobToEdit.datePosted}">
+        <input type="text" name="companyName" placeholder="Company Name" th:value="${jobToEdit.companyName}">
+        <input type="text" name="location" placeholder="Location" th:value="${jobToEdit.location}">
+        <input type="text" name="requirements" placeholder="Requirements" th:value="${jobToEdit.requirements}">
+        <input type="text" name="description" placeholder="Description" th:value="${jobToEdit.description}">
         <input type="submit" value="Edit">
     </form>
 </body>

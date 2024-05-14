@@ -45,10 +45,13 @@
     </style>
 </head>
 <body>
-
-<form method="post" action="/jobs/create_job" th:object="${newJob}">
-    <input type="text" name="title" placeholder="Title">
-    <input type="number" name="year" placeholder="Year">
+<form action="#" th:action="@{/jobs/create_job}" th:object="${newJob}" method="post">
+<!--<form method="post" action="/jobs/create_job" th:object="${newJob}">-->
+    <input type="text" name="jobDetails" placeholder="Job_Details">
+    <input type="number" name="datePosted" placeholder="Date_Posted">
+    <input type="text" name="companyName" placeholder="Company Name">
+    <input type="text" name="location" placeholder="Location">
+    <input type="text" name="requirements" placeholder="Requirements">
     <input type="text" name="description" placeholder="Description">
     <input type="submit" value="Save">
 </form>

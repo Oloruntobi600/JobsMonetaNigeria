@@ -10,4 +10,6 @@ public interface JobService {
     JobModel findByTitleAndDelete(String title);
     void edit(JobModel jobs);
     void delete(String title);
+
+
 }

@@ -27,10 +27,9 @@ public class JobController {
     private final JobServiceImpl jobService;
 
 
-
     @GetMapping
     public String getJobPage(Model model,
-                              @AuthenticationPrincipal UserDetails userDetails) {
+                             @AuthenticationPrincipal UserDetails userDetails) {
 
         String username = userDetails.getUsername();
         System.out.println(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
@@ -50,12 +49,17 @@ public class JobController {
     }
 
     @PostMapping("/create_job")
-    public String createJob(@ModelAttribute ("newJob") JobModel jobModel) {
-        jobService.save(jobModel);
+    public String createJob(@ModelAttribute("newJob") JobModel jobModel) {
+//        jobService.save(jobModel);
+//        return "redirect:/jobs";
+        if (jobModel.getCompanyName() != null && !jobModel.getCompanyName().isEmpty()) {
+            jobService.save(jobModel);
+        }
         return "redirect:/jobs";
     }
 
     @GetMapping("/edit/{title}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String getEditJobPage(Model model, @PathVariable String title) {
         JobModel byTitle = jobService.findByTitleAndDelete(title);
         model.addAttribute("jobToEdit", byTitle);
@@ -73,5 +77,15 @@ public class JobController {
     public String delete(@PathVariable String title) {
         jobService.delete(title);
         return "redirect:/jobs";
+    }
+
+    @PostMapping("/browse")
+    public String browseJob() {
+        return "redirect:/browse-job";
+    }
+
+    @GetMapping("/browse-job")
+    public String browseJobPage() {
+        return "browse-job";
     }
 }
