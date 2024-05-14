@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            text-align: center;
+            margin: 20px 0;
+            color: #dc3545;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Login</h1>
+    <div th:if="${param.success}" class="message">
+        You successfully registered. Please use your credentials to log in.
+    </div>
+    <div th:if="${param.error}" class="message">
+        Login or password incorrect.
+    </div>
+    <div th:if="${param.logout}" class="message">
+        You've been logged out.
+    </div>
+    <form th:action="@{/login}" method="post" th:object="${user}">
+        <input name="username" type="text" placeholder="Username" required>
+        <br>
+        <input name="password" type="password" placeholder="Password" required>
+        <br>
+        <input type="submit" value="Log in">
+    </form>
+    <a href="/">Main page</a>
+    <a class="active" href="/">Home</a>
+</div>
+</body>
+</html>
