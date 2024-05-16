@@ -65,9 +65,9 @@
       color: #fff;
       text-align: center;
       padding: 10px 0;
-      position: fixed;
-      bottom: 0;
+      position: relative;
       width: 100%;
+      clear: both;
     }
   </style>
 </head>
@@ -107,6 +107,7 @@
       <td><button><a th:href="@{|/jobs/edit/${job.jobDetails}|}">Edit</a></button></td>
       <td sec:authorize="hasRole('ADMIN')">
         <button><a th:href="@{|/jobs/delete/${job.jobDetails}|}">Delete</a></button></td>
+      <td><button><a th:href="@{|/jobs/apply/${job.jobDetails}|}">Apply</a></button></td>
     </tr>
   </th:block>
 </table>

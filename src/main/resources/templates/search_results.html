@@ -3,142 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Job Search Results</title>
+  <title>Job Search</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
     }
 
     .container {
       max-width: 800px;
-      margin: 20px auto;
+      margin: 0 auto;
       padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
     }
 
-    h1, h2 {
-      color: #333;
+    h1 {
       text-align: center;
+      margin-bottom: 20px;
     }
 
     form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin-bottom: 20px;
-      text-align: center;
     }
 
-    label {
-      font-weight: bold;
+    form label {
       margin-right: 10px;
     }
 
-    input[type="text"] {
-      width: 200px;
+    form input[type="text"] {
       padding: 8px;
       margin-right: 10px;
-      border: 1px solid #ccc;
       border-radius: 4px;
+      border: 1px solid #ccc;
+      transition: border-color 0.3s ease;
     }
 
-    button {
-      padding: 8px 20px;
+    form input[type="text"]:focus {
+      border-color: #007bff;
+    }
+
+    button[type="submit"] {
       background-color: #007bff;
       color: #fff;
+      padding: 8px 16px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
-    button:hover {
+    button[type="submit"]:hover {
       background-color: #0056b3;
     }
 
-    .job-listing {
+    #jobListings {
       border: 1px solid #ccc;
-      margin-bottom: 20px;
-      padding: 20px;
-      border-radius: 8px;
-      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 4px;
+      background-color: #fff;
     }
 
-    .job-listing h3 {
-      margin-top: 0;
+    #jobListings ul {
+      list-style-type: none;
+      padding: 0;
     }
 
-    .job-listing p {
+    #jobListings ul li {
       margin-bottom: 5px;
+    }
+
+    .back-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 <div class="container">
   <h1>Job Search</h1>
-  <form id="searchForm">
+  <form action="#" th:action="@{/searchJobs}" th:object="${newJobs}" method="get">
     <label for="keyword">Keyword:</label>
     <input type="text" id="keyword" name="keyword">
     <label for="location">Location:</label>
     <input type="text" id="location" name="location">
-    <button type="button" onclick="searchJobs()">Search</button>
+    <button type="submit">Search</button>
   </form>
 
-<!--  <h2>Search Results</h2>-->
   <div id="jobListings">
-    <!-- Job listings will be dynamically added here -->
+
+<!--    <ul th:each="search : ${application}">-->
+<!--      <li th:text="${search}"></li>-->
+<!--    </ul>-->
+<!--    <ul>-->
+<!--      <li th:each="job : ${searchResults}" th:text="${job.jobDetails}"></li>-->
+<!--    </ul>-->
+  </div>
+  <div class="back-button">
+    <a th:href="@{/}" class="back-link">Go Back</a>
   </div>
 </div>
-
-<script>
-  // Function to display job listings
-  function displayJobListings(jobs) {
-    var jobListings = document.getElementById("jobListings");
-    jobListings.innerHTML = ""; // Clear previous listings
-
-    jobs.forEach(function(job) {
-      var jobListing = document.createElement("div");
-      jobListing.classList.add("job-listing");
-
-      // Construct the HTML for each job listing
-      var html = "<h3>" + job.jobDetails + "</h3>";
-      html += "<p><strong>Company:</strong> " + job.companyName + "</p>";
-      html += "<p><strong>Location:</strong> " + job.location + "</p>";
-      html += "<p><strong>Requirements:</strong> " + job.requirements + "</p>";
-
-
-      jobListing.innerHTML = html;
-      jobListings.appendChild(jobListing);
-    });
-  }
-
-  // Function to perform job search
-  function searchJobs() {
-    var keyword = document.getElementById("keyword").value;
-    var location = document.getElementById("location").value;
-
-    var searchResults = [
-      {
-        jobDetails: "Software Engineer",
-        companyName: "Tech Co.",
-        location: "New York",
-        requirements: "Bachelor's degree in Computer Science, 3+ years of experience",
-
-      },
-      {
-        jobDetails: "Data Analyst",
-        companyName: "Data Corp.",
-        location: "San Francisco",
-        requirements: "Strong analytical skills, experience with SQL",
-
-      },
-
-    ];
-
-    // Call the displayJobListings function with the search results
-    displayJobListings(searchResults);
-  }
-</script>
 </body>
 </html>

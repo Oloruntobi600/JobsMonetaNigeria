@@ -27,6 +27,10 @@ public class JobServiceImpl implements JobService {
         this.jobRepository = jobRepository;
         this.jobDao = jobDao;
     }
+    @Override
+    public JobModel findByTitle(String title) {
+        return jobRepository.findByTitle(title).orElse(null);
+    }
 
     @Override
     public List<JobModel> getAllJobsByLogin(String login) {
@@ -60,6 +64,7 @@ public class JobServiceImpl implements JobService {
         jobRepository.delete(jobModel);
         return jobModel;
     }
+
     @Override
     public void edit(JobModel jobs) {
         save(jobs);
@@ -72,6 +77,7 @@ public class JobServiceImpl implements JobService {
 
     @Autowired
     private EntityManager entityManager;
+    @Override
     public List<JobModel> searchJobs(String jobDetails, String companyName, String location) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<JobModel> criteriaQuery = criteriaBuilder.createQuery(JobModel.class);

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    p {
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <form method="get" th:action="@{'/jobs/apply/' + ${jobDetails}}">
+    <!-- Add any form fields you need here -->
+    <input type="hidden" name="jobId" th:value="${jobDetails}">
+  </form>
+
+  <h1>Thank you for Applying</h1>
+  <p th:text="${applicationStatus}"></p>
+  <div class="back-button">
+    <a th:href="@{/jobs}" class="back-link">Go Back</a>
+  </div>
+</div>
+</body>
+</html>

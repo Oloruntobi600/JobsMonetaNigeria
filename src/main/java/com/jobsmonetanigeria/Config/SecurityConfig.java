@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(request -> request
-                        .antMatchers("/", "/templates/*", "/styles/*", "/registration", "/login","/jobs/create").permitAll()
+                        .antMatchers("/", "/templates/*", "/styles/*", "/registration", "/login","/jobs/create","/searchJobs").permitAll()
                         .antMatchers("/jobs/create").authenticated() // Permit access to authenticated users
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
