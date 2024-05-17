@@ -57,7 +57,7 @@ public class JobController {
     @GetMapping("/edit/{title}")
     @PreAuthorize("hasRole('ADMIN')")
     public String getEditJobPage(Model model, @PathVariable String title) {
-        JobModel byTitle = jobService.findByTitle(title);
+        JobModel byTitle = (JobModel) jobService.findByTitle(title);
         model.addAttribute("jobToEdit", byTitle);
         return "edit_job_page";
     }

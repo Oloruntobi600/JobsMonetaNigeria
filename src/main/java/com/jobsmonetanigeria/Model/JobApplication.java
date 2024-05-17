@@ -17,7 +17,7 @@ public class JobApplication {
     private JobModel job;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // Assuming you have a User entity with a corresponding table
+    @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
     @Column(name = "applicant_name", nullable = false)
@@ -28,13 +28,13 @@ public class JobApplication {
 
     // Constructors, getters, and setters
     public JobApplication() {
-        this.applicationDate = new Date(); // Set the current date as the default application date
+        this.applicationDate = new Date();
     }
 
     public JobApplication(JobModel job, String applicantName) {
         this.job = job;
         this.applicantName = applicantName;
-        this.applicationDate = new Date(); // Set the current date as the default application date
+        this.applicationDate = new Date();
     }
 
     // Getters and setters

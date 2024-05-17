@@ -41,7 +41,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                 JobApplication jobApplication = new JobApplication(job, applicantName);
                 jobApplicationRepository.save(jobApplication);
             }
-            return "Applications submitted successfully!";
+            return "Applied for job: " + jobDetails + " by " + applicantName;
         } else {
             return "Job not found!";
         }

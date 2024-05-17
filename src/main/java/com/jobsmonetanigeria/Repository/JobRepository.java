@@ -14,4 +14,5 @@ public interface JobRepository extends JpaRepository<JobModel, Long> {
     @Query("SELECT j FROM JobModel j WHERE j.datePosted > :year")
     List<JobModel> findByYearGreaterThan(@Param("year") int year);
     List<JobModel> findByJobDetails(String title);
+
 }

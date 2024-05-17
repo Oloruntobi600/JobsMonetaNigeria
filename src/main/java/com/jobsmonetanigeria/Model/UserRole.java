@@ -1,5 +1,8 @@
 package com.jobsmonetanigeria.Model;
 
 public enum UserRole {
-    ADMIN, USER
+    ADMIN, USER;
+
+    public void setName(String user) {
+    }
 }
