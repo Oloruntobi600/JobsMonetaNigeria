@@ -24,16 +24,17 @@ public class JobController {
 
 
     @GetMapping
-    public String getJobPage(Model model,
-                             @AuthenticationPrincipal UserDetails userDetails) {
-
+    public String getJobPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
+        boolean isAdmin = userDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
         System.out.println(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
 
         model.addAttribute(USER_LOGIN, username);
+        model.addAttribute("isAdmin", isAdmin);
 
         List<JobModel> jobs = jobService.getAllJobsByLogin(username);
-
         model.addAttribute("userJobs", jobs);
         return "job_page";
     }
@@ -45,9 +46,8 @@ public class JobController {
     }
 
     @PostMapping("/create_job")
+    @PreAuthorize("hasRole('ADMIN')")
     public String createJob(@ModelAttribute("newJob") JobModel jobModel) {
-//        jobService.save(jobModel);
-//        return "redirect:/jobs";
         if (jobModel.getCompanyName() != null && !jobModel.getCompanyName().isEmpty()) {
             jobService.save(jobModel);
         }
@@ -63,6 +63,7 @@ public class JobController {
     }
 
     @PostMapping("/editJob")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editJob(@ModelAttribute JobModel job) {
         jobService.edit(job);
         return "redirect:/jobs";

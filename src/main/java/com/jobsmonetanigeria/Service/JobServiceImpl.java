@@ -66,8 +66,18 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public void edit(JobModel jobs) {
-        save(jobs);
+//    public void edit(JobModel jobs) {
+//        save(jobs);
+//    }
+    public void edit(JobModel job) {
+        JobModel existingJob = jobRepository.findById(job.getId()).orElseThrow(() -> new RuntimeException("Job not found"));
+        existingJob.setJobDetails(job.getJobDetails());
+        existingJob.setDatePosted(job.getDatePosted());
+        existingJob.setCompanyName(job.getCompanyName());
+        existingJob.setLocation(job.getLocation());
+        existingJob.setRequirements(job.getRequirements());
+        existingJob.setDescription(job.getDescription());
+        jobRepository.save(existingJob);
     }
 
     @Override

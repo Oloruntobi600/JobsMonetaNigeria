@@ -2,10 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit</title>
+    <title>Edit Job</title>
 </head>
 <body>
     <form method="post" th:action="@{/jobs/editJob}" th:object="${jobToEdit}">
+        <input type="hidden" name="id" th:value="${jobToEdit.id}">
         <input type="text" name="jobDetails" placeholder="Job_Details" th:value="${jobToEdit.description}">
         <input type="number" name="datePosted" placeholder="Date_Posted" th:value="${jobToEdit.datePosted}">
         <input type="text" name="companyName" placeholder="Company Name" th:value="${jobToEdit.companyName}">

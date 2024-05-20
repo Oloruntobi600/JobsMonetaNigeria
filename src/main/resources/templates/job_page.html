@@ -74,7 +74,7 @@
 <body>
 <header>
   <div th:insert="~{parts/navigation::navigation}"></div>
-  <h1> <span th:text="${userLogin}"></span></h1>
+  <h1><span th:text="${userLogin}"></span></h1>
   <form th:action="@{/logout}" method="post">
     <input type="submit" value="Logout">
   </form>
@@ -93,9 +93,9 @@
     <th>Company Name</th>
     <th>Location</th>
     <th>Requirements</th>
-    <th></th>
-    <th></th>
-    <th sec:authorize="hasRole('ADMIN')"></th>
+    <th th:if="${isAdmin}">Edit</th>
+    <th th:if="${isAdmin}">Delete</th>
+    <th>Apply</th>
   </tr>
   <th:block th:each="job : ${userJobs}">
     <tr>
@@ -104,17 +104,22 @@
       <td th:text="${job.companyName}"></td>
       <td th:text="${job.location}"></td>
       <td th:text="${job.requirements}"></td>
-      <td><button><a th:href="@{|/jobs/edit/${job.jobDetails}|}">Edit</a></button></td>
-      <td sec:authorize="hasRole('ADMIN')">
-        <button><a th:href="@{|/jobs/delete/${job.jobDetails}|}">Delete</a></button></td>
-      <td><button><a th:href="@{|/jobs/apply/${job.jobDetails}|}">Apply</a></button></td>
+      <td th:if="${isAdmin}">
+        <button><a th:href="@{|/jobs/edit/${job.jobDetails}|}">Edit</a></button>
+      </td>
+      <td th:if="${isAdmin}">
+        <button><a th:href="@{|/jobs/delete/${job.jobDetails}|}">Delete</a></button>
+      </td>
+      <td>
+        <button><a th:href="@{|/jobs/apply/${job.jobDetails}|}">Apply</a></button>
+      </td>
     </tr>
   </th:block>
 </table>
-<a th:href="@{/jobs/create}" sec:authorize="hasRole('ADMIN')">Add new Job</a>
+<a th:href="@{/jobs/create}" th:if="${isAdmin}">Add new Job</a>
 
 <footer>
-  <div th:insert="~{parts/footer :: footer}"></div>
+  <div th:insert="~{parts/footer::footer}"></div>
 </footer>
 </body>
 </html>
